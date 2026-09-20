@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [development, main]
+  push:
+    branches: [development, main]
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    name: Bootstrap checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce branch progression
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+          SOURCE_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          case "$BASE:$HEAD" in
+            development:feat/*) ;;
+            main:development) test "$SOURCE_REPO" = "$REPO" ;;
+            *) echo "Required progression: feat/* -> development -> main"; exit 1 ;;
+          esac
+      - name: Check patch whitespace
+        run: git show --format= --check HEAD
+      - name: Validate bootstrap files
+        run: |
+          test -s README.md
+          test -s LICENSE
+          test -s GRAIN.md
+          test -x taskctl
+      - name: Validate taskctl repository
+        run: ./taskctl doctor
