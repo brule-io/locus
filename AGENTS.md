@@ -36,3 +36,18 @@ Commit the generated launchers and state (preserve the POSIX executable bit).
 Set `TASKCTL_OFFLINE=1` to require cached operation. Private GitHub release
 acquisition accepts `TASKCTL_GITHUB_TOKEN` or `GH_TOKEN` with contents read.
 Native alpha contracts are not v1; upgrades never silently rewrite records.
+
+## Locus branch workflow
+
+- `main` is the stable release head (production).
+- `development` is the integration head.
+- Start work on `feat/<task-or-topic>` branches from `development`.
+- Progress changes through a pull request from `feat/*` to `development`,
+  passing CI before merging; then a pull request from `development` to `main`,
+  passing CI before merging.
+- Both long-lived branches are protected, including for administrators. Never
+  push directly, force-push, or bypass required checks. Use merge commits to
+  preserve ancestry between development and main.
+- Read `GRAIN.md` before proposing architecture or implementation changes.
+- Bootstrap and R&D have no planned tasks yet. Do not seed tasks, roadmaps,
+  or epics until the user explicitly requests tasking. Keep README.md simple.
