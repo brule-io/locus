@@ -1,0 +1,1 @@
+{"contract":"taskctl.init/alpha1","repository_id":"brule.locus","plan_digest":"sha256:ee39c9f98029d29e3aea95487d04e6d4b26d98c9fa92adcbf55f2667eb36d6eb","files":[".agents/.gitignore",".agents/config.toml",".agents/history/heads.json",".agents/policy.toml",".taskctl/.gitignore",".taskctl/toolchain.lock","AGENTS.md","taskctl","taskctl.bat","taskctl.ps1"]}
